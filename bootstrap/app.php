@@ -16,6 +16,9 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
+        // Di Vercel aplikasi berada di belakang proxy HTTPS: percayai header X-Forwarded-*
+        $middleware->trustProxies(at: '*');
+
         // Alias middleware dari Spatie Laravel Permission
         $middleware->alias([
             'role' => RoleMiddleware::class,

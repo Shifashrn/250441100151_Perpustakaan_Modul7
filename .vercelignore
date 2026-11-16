@@ -1,0 +1,26 @@
+# Rahasia dan berkas lokal (WAJIB)
+.env
+.env.*
+
+# Riwayat dan editor
+.git
+.github
+.vscode
+.idea
+
+# Dependensi (Vercel menjalankan composer install sendiri)
+vendor
+node_modules
+
+# Tidak diperlukan di production
+tests
+public/hot
+database/*.sqlite
+storage/logs/*
+storage/framework/cache/*
+storage/framework/sessions/*
+storage/framework/views/*
+*.log
+README.md
+CLAUDE.md
+AGENTS.md
