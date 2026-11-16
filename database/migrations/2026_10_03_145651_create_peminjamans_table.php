@@ -2,29 +2,34 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
     /**
-     * Status peminjaman: diajukan -> dipinjam -> dikembalikan (atau ditolak).
+     * Run the migrations.
      */
     public function up(): void
     {
-        Schema::table('peminjamans', function (Blueprint $table) {
-            $table->string('status', 20)->default('diajukan')->after('tanggal_kembali');
+        Schema::create('peminjamans', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('anggota_id')
+                ->constrained('anggotas')
+                ->onDelete('cascade');
+            $table->foreignId('buku_id')
+                ->constrained('bukus')
+                ->onDelete('cascade');
+            $table->date('tanggal_pinjam');
+            $table->date('tanggal_kembali')->nullable();
+            $table->timestamps();
         });
-
-        // Data lama dari Modul 4: sesuaikan status dengan tanggal_kembali
-        DB::table('peminjamans')->whereNull('tanggal_kembali')->update(['status' => 'dipinjam']);
-        DB::table('peminjamans')->whereNotNull('tanggal_kembali')->update(['status' => 'dikembalikan']);
     }
 
+    /**
+     * Reverse the migrations.
+     */
     public function down(): void
     {
-        Schema::table('peminjamans', function (Blueprint $table) {
-            $table->dropColumn('status');
-        });
+        Schema::dropIfExists('peminjamans');
     }
 };

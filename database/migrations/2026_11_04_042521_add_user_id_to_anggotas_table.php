@@ -6,6 +6,10 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
+    /**
+     * Menautkan akun login (users) dengan data anggota perpustakaan.
+     * Nullable agar data anggota lama dari Modul 4 tetap aman.
+     */
     public function up(): void
     {
         Schema::table('anggotas', function (Blueprint $table) {

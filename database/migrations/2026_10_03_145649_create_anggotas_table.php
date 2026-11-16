@@ -7,25 +7,24 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration
 {
     /**
-     * Menautkan akun login (users) dengan data anggota perpustakaan.
-     * Nullable agar data anggota lama dari Modul 4 tetap aman.
+     * Run the migrations.
      */
     public function up(): void
     {
-        Schema::table('anggotas', function (Blueprint $table) {
-            $table->foreignId('user_id')
-                ->nullable()
-                ->unique()
-                ->after('id')
-                ->constrained('users')
-                ->nullOnDelete();
+        Schema::create('anggotas', function (Blueprint $table) {
+            $table->id();
+            $table->string('nama');
+            $table->string('email')->unique();
+            $table->string('no_telepon');
+            $table->timestamps();
         });
     }
 
+    /**
+     * Reverse the migrations.
+     */
     public function down(): void
     {
-        Schema::table('anggotas', function (Blueprint $table) {
-            $table->dropConstrainedForeignId('user_id');
-        });
+        Schema::dropIfExists('anggotas');
     }
 };
