@@ -31,6 +31,16 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->redirectUsersTo(fn () => route('dashboard'));
     })
     ->withExceptions(function (Exceptions $exceptions): void {
+        // SEMENTARA: hapus blok ini setelah penyebab error ketemu
+        $exceptions->render(function (\Throwable $e) {
+            if ($e instanceof \Symfony\Component\HttpKernel\Exception\HttpExceptionInterface) {
+                return null;
+            }
+
+            return response(get_class($e)."\n\n".$e->getMessage(), 500)
+                ->header('Content-Type', 'text/plain');
+        });
+
         $exceptions->shouldRenderJsonWhen(
             fn (Request $request) => $request->is('api/*') || $request->expectsJson(),
         );
