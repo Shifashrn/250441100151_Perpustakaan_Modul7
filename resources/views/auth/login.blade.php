@@ -4,7 +4,7 @@
 
 <div class="form-card">
     <p class="subtitle">AKUN</p>
-    <h2>Masuk</h2>
+    <h2>Masuk - 250441100151</h2>
     <p>Silakan masuk untuk mengakses PerpusSpace.</p>
 
     <form method="POST" action="{{ route('login') }}" style="margin-top:20px;">
